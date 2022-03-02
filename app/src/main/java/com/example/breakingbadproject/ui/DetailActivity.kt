@@ -2,11 +2,11 @@ package com.example.breakingbadproject.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.breakingbadproject.R
 import com.example.breakingbadproject.databinding.ActivityDetailBinding
+import com.example.breakingbadproject.util.Constants.Companion.CHARACTER_UUID
+import com.example.breakingbadproject.util.displayImage
+import com.example.breakingbadproject.util.makePlaceholder
 import com.example.breakingbadproject.viewmodel.DetailViewModel
 
 private lateinit var binding: ActivityDetailBinding
@@ -18,24 +18,23 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        supportActionBar?.hide()
 
         val i = intent.extras
-        var id = 0
-         if ( i != null) {
-            id = i.getInt("charId")
-         }
+        val id = i?.getInt(CHARACTER_UUID) ?: 0
 
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
-        detailViewModel.getCharacter(id)
+        detailViewModel.getDetails(id)
 
         observe()
 
     }
 
-    fun observe() {
-        detailViewModel.charDetailMutableLiveData.observe(this, Observer {
+    private fun observe() {
+        detailViewModel.charDetailMutableLiveData.observe(this) {
             binding.name.text = it.name
-        })
+            binding.image.displayImage(it.img, makePlaceholder(this))
+        }
     }
 }

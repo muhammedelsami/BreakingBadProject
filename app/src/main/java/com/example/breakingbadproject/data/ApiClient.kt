@@ -1,10 +1,11 @@
 package com.example.breakingbadproject.data
 
+import com.example.breakingbadproject.util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    val BASE_URL = "https://breakingbadapi.com/api/"
+
     private var retrofit: Retrofit? = null
 
     fun getClient() : Retrofit {

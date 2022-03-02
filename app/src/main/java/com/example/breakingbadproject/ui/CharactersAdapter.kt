@@ -1,23 +1,20 @@
 package com.example.breakingbadproject.ui
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
-//import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.breakingbadproject.R
 import com.example.breakingbadproject.databinding.CharacterItemBinding
 import com.example.breakingbadproject.model.CharactersModelItem
+import com.example.breakingbadproject.util.Constants.Companion.CHARACTER_UUID
 import com.example.breakingbadproject.util.displayImage
 import com.example.breakingbadproject.util.makePlaceholder
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlin.collections.ArrayList
 
-class CharactersAdapter(var charList : ArrayList<CharactersModelItem>) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
+class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
 
     // Without viewBinding
     // class CharacterViewHolder(view: View ) : RecyclerView.ViewHolder(view) {
@@ -51,7 +48,7 @@ class CharactersAdapter(var charList : ArrayList<CharactersModelItem>) : Recycle
         holder.img.displayImage(charList[position].img, makePlaceholder(holder.img.context))
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("charId", charList[position].char_id)
+            intent.putExtra(CHARACTER_UUID, charList[position].uuid)
             holder.itemView.context.startActivity(intent)
         }
 
