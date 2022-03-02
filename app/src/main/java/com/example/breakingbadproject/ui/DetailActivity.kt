@@ -35,6 +35,9 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel.charDetailMutableLiveData.observe(this) {
             binding.name.text = it.name
             binding.image.displayImage(it.img, makePlaceholder(this))
+            binding.birthday.text = it.birthday
+            binding.nickname.text = it.nickname
+            binding.status.text = it.status
         }
     }
 }
