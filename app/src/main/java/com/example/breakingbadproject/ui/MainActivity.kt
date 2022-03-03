@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.breakingbadproject.adapter.CharactersAdapter
 import com.example.breakingbadproject.databinding.ActivityMainBinding
 import com.example.breakingbadproject.model.CharactersModelItem
 import com.example.breakingbadproject.viewmodel.CharacterViewModel

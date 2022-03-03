@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BreakingBadProject</string>
+    <string name="breaking_bad">Breaking Bad</string>
+    <string name="todo">TODO</string>
 </resources>

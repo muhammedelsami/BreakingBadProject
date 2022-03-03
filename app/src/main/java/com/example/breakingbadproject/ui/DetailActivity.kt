@@ -10,8 +10,11 @@ import com.example.breakingbadproject.util.makePlaceholder
 import com.example.breakingbadproject.viewmodel.DetailViewModel
 
 private lateinit var binding: ActivityDetailBinding
+
 class DetailActivity : AppCompatActivity() {
     private lateinit var detailViewModel: DetailViewModel
+    private lateinit var databinding : ActivityDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_detail)
@@ -27,17 +30,18 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel.getDetails(id)
 
-        observe()
+        observeLiveData()
 
     }
 
-    private fun observe() {
+    private fun observeLiveData() {
         detailViewModel.charDetailMutableLiveData.observe(this) {
-            binding.name.text = it.name
-            binding.image.displayImage(it.img, makePlaceholder(this))
-            binding.birthday.text = it.birthday
-            binding.nickname.text = it.nickname
-            binding.status.text = it.status
+            binding.characterDetails = it
+//            binding.name.text = it.name
+//            binding.image.displayImage(it.img, makePlaceholder(this))
+//            binding.birthday.text = it.birthday
+//            binding.nickname.text = it.nickname
+//            binding.status.text = it.status
         }
     }
 }

@@ -1,24 +1,25 @@
-package com.example.breakingbadproject.ui
+package com.example.breakingbadproject.adapter
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.breakingbadproject.databinding.CharacterItemBinding
 import com.example.breakingbadproject.model.CharactersModelItem
+import com.example.breakingbadproject.ui.DetailActivity
 import com.example.breakingbadproject.util.Constants.Companion.CHARACTER_UUID
-import com.example.breakingbadproject.util.displayImage
-import com.example.breakingbadproject.util.makePlaceholder
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.collections.ArrayList
 
-class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
+class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>(), CharacterClickListener {
 
     // Without viewBinding
     // class CharacterViewHolder(view: View ) : RecyclerView.ViewHolder(view) {
-    class CharacterViewHolder(binding: CharacterItemBinding ) : RecyclerView.ViewHolder(binding.root) {
+    class CharacterViewHolder(var binding: CharacterItemBinding ) : RecyclerView.ViewHolder(binding.root) {
         val name : TextView = binding.characterName
         val img : CircleImageView = binding.characterImage
         val birthday : TextView = binding.characterBirthday
@@ -40,6 +41,12 @@ class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) :
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
+        // dataBinding
+        holder.binding.characters = charList[position]
+        holder.binding.listener = this
+
+        /*
+        // Without dataBinding
         holder.name.text = charList[position].name
         holder.birthday.text = charList[position].birthday
         //holder.img.setImageResource(charList.get(position).img)
@@ -51,6 +58,7 @@ class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) :
             intent.putExtra(CHARACTER_UUID, charList[position].uuid)
             holder.itemView.context.startActivity(intent)
         }
+        */
 
     }
 
@@ -63,5 +71,16 @@ class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) :
         charList.clear()
         charList = list
         notifyDataSetChanged()
+    }
+
+
+
+    override fun characterClicked(view: View, ch : CharactersModelItem) {
+        Log.d("test", "characterClicked: "+view.id.toString())
+        //view.context
+
+        val intent = Intent(view.context, DetailActivity::class.java)
+        intent.putExtra(CHARACTER_UUID, ch.uuid)
+        view.context.startActivity(intent)
     }
 }
