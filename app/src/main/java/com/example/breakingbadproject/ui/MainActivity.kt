@@ -13,6 +13,7 @@ import com.example.breakingbadproject.adapter.CharactersAdapter
 import com.example.breakingbadproject.databinding.ActivityMainBinding
 import com.example.breakingbadproject.model.CharactersModelItem
 import com.example.breakingbadproject.viewmodel.CharacterViewModel
+import com.sn.lib.NestedProgress
 
 private lateinit var binding: ActivityMainBinding
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     //latent var apiService: ApiService
     //latent var charList: MutableList<CharactersModelItem>
 
-    private lateinit var progressBar : ProgressBar
+    private lateinit var progressBar : NestedProgress
     private lateinit var errorMsg : TextView
     private lateinit var refresh : SwipeRefreshLayout
 

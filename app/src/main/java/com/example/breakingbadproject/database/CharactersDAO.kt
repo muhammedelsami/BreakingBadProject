@@ -1,6 +1,7 @@
 package com.example.breakingbadproject.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.breakingbadproject.model.CharactersModelItem
@@ -20,4 +21,7 @@ interface CharactersDAO {
 
     @Query("DELETE FROM characters")
     suspend fun deleteAllCharacter()
+
+    @Delete
+    suspend fun deleteCharacter(charactersModelItem: CharactersModelItem)
 }

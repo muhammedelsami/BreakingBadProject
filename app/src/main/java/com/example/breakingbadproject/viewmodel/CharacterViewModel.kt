@@ -3,9 +3,14 @@ package com.example.breakingbadproject.viewmodel
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
+import com.example.breakingbadproject.adapter.CharacterClickDelete
+import com.example.breakingbadproject.adapter.CharacterClickListener
+import com.example.breakingbadproject.adapter.CharactersAdapter
 import com.example.breakingbadproject.data.ApiClient
 import com.example.breakingbadproject.data.ApiService
 import com.example.breakingbadproject.database.CharactersDatabase
@@ -20,7 +25,7 @@ class CharacterViewModel(application: Application) : BaseViewModel(application) 
     lateinit var apiService: ApiService
     lateinit var charList: MutableList<CharactersModelItem>
 
-    val charMutableLiveData : MutableLiveData<List<CharactersModelItem>> = MutableLiveData()
+    val charMutableLiveData: MutableLiveData<List<CharactersModelItem>> = MutableLiveData()
     val errorMessage = MutableLiveData<Boolean>()
     val progressBar = MutableLiveData<Boolean>()
 
@@ -28,12 +33,11 @@ class CharacterViewModel(application: Application) : BaseViewModel(application) 
 
     private val mySharedPreferences = MySharedPreferences(getApplication())
 
-    fun refresh(){
+    fun refresh() {
         val savedTime = mySharedPreferences.getSavedTime()
         if (savedTime != null && savedTime != 0L && System.nanoTime() - savedTime < refreshTime) {
             getCharactersFromDB()
-        }
-        else {
+        } else {
             getCharactersFromNetwork()
         }
     }
@@ -45,7 +49,8 @@ class CharacterViewModel(application: Application) : BaseViewModel(application) 
     fun getCharactersFromDB() {
         progressBar.value = true
         launch {
-            val charactersList = CharactersDatabase.invoke(getApplication()).characterDao().getAllCharacter()
+            val charactersList =
+                CharactersDatabase.invoke(getApplication()).characterDao().getAllCharacter()
             viewData(charactersList)
             Toast.makeText(getApplication(), "Data From Database", Toast.LENGTH_SHORT).show()
         }
@@ -79,13 +84,13 @@ class CharacterViewModel(application: Application) : BaseViewModel(application) 
         })
     }
 
-    private fun viewData(charactersList : List<CharactersModelItem>) {
+    private fun viewData(charactersList: List<CharactersModelItem>) {
         charMutableLiveData.value = charactersList
         errorMessage.value = false
         progressBar.value = false
     }
 
-    private fun saveToDatabase(charactersList : List<CharactersModelItem>) {
+    private fun saveToDatabase(charactersList: List<CharactersModelItem>) {
         launch {
             val dao = CharactersDatabase.invoke(getApplication()).characterDao()
             dao.deleteAllCharacter()
@@ -98,5 +103,18 @@ class CharacterViewModel(application: Application) : BaseViewModel(application) 
             viewData(charactersList)
         }
         mySharedPreferences.savedTime(System.nanoTime())
+    }
+
+    fun deleteCharacter(id: Int) {
+        progressBar.value = true
+        var lll : List<CharactersModelItem> = arrayListOf()
+
+        launch {
+            val character = CharactersDatabase.invoke(getApplication()).characterDao().getCharacter(id)
+            character.let {
+                CharactersDatabase.invoke(getApplication()).characterDao().deleteCharacter(it)
+            }
+            Toast.makeText(getApplication(), "Silindi", Toast.LENGTH_SHORT).show()
+        }
     }
 }

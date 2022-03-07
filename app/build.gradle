@@ -80,4 +80,7 @@ dependencies {
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
+    // NestedProgress
+    implementation 'com.github.emreesen27:Android-Nested-Progress:v1.0.2'
+
 }

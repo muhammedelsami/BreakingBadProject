@@ -1,18 +1,23 @@
 package com.example.breakingbadproject.adapter
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.breakingbadproject.database.CharactersDatabase
 import com.example.breakingbadproject.databinding.CharacterItemBinding
 import com.example.breakingbadproject.model.CharactersModelItem
 import com.example.breakingbadproject.ui.DetailActivity
 import com.example.breakingbadproject.util.Constants.Companion.CHARACTER_UUID
+import com.example.breakingbadproject.viewmodel.CharacterViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>(), CharacterClickListener {
@@ -40,10 +45,20 @@ class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) :
         // return CharacterViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.character_item,parent,false))
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         // dataBinding
         holder.binding.characters = charList[position]
         holder.binding.listener = this
+        holder.binding.characterDelete.setOnClickListener {
+            val delete = CharacterViewModel(holder.itemView.context.applicationContext as Application)
+            delete.deleteCharacter(holder.binding.characterUuid.text.toString().toInt()).apply {
+                charList.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position,charList.size)
+            }
+
+        }
 
         /*
         // Without dataBinding
