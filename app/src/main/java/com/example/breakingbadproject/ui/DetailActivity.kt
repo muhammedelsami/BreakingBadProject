@@ -28,6 +28,8 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
+        binding.viewmodel = detailViewModel
+
         detailViewModel.getDetails(id)
 
         observeLiveData()

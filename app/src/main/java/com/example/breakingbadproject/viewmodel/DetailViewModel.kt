@@ -2,6 +2,7 @@ package com.example.breakingbadproject.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,13 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
 
     val charDetailMutableLiveData = MutableLiveData<CharactersModelItem>()
 
+    //for Use Repository
+//    val mRepo = DetailRepository(application)
+//
+//    init {
+//        charDetailMutableLiveData = mRepo.getCharDetailMutableLiveData()
+//    }
+
     fun getDetails(id: Int) {
         getDetailsFromDB(id)
     }
@@ -31,6 +39,10 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
             charDetailMutableLiveData.value = characterDetail
             Toast.makeText(getApplication(), "Data From Database", Toast.LENGTH_SHORT).show()
         }
+
+        //for Use Repository
+//        mRepo.getDetailsFromDB(id)
+
     }
 
     fun getCharacter(id : Int) {
@@ -55,4 +67,9 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
         })
 
     }
+
+    fun onPasswordTextChanged() {
+        Toast.makeText(getApplication(), "yazzzzzz", Toast.LENGTH_SHORT).show()
+    }
+
 }

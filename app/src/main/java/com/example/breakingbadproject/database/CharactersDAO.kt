@@ -24,4 +24,8 @@ interface CharactersDAO {
 
     @Delete
     suspend fun deleteCharacter(charactersModelItem: CharactersModelItem)
+
+    // for Search (Right Menu)
+    @Query("SELECT * FROM characters WHERE name LIKE :searchQuery OR nickname LIKE :searchQuery")
+    suspend fun searchDatabase(searchQuery: String): List<CharactersModelItem>
 }

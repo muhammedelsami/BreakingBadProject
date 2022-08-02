@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="20dp"
         android:onClick="@{(v) -> listener.characterClicked(v, characters)}"
         app:cardElevation="4dp">
         <TextView
@@ -90,3 +90,6 @@
 
     </androidx.cardview.widget.CardView>
 </layout>
+
+<!-- Xml'den ->  viewmodel-->
+    <!--                android:onClick="@{() -> viewmodel.deleteCharacter(characters.uuid)}"-->

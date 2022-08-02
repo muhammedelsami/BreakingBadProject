@@ -8,9 +8,15 @@
         android:layout_height="match_parent"
         android:background="#DDCBD1D6"
         tools:context=".ui.MainActivity">
+<!--        <include-->
+<!--            android:id="@+id/toolbar"-->
+<!--            layout="@layout/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"/>-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/menu"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -23,9 +29,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:fontFamily="cursive"
+                android:fontFamily="@font/quranfont"
                 android:gravity="center"
-                android:text="Breaking Bad Api"
+                android:text="ddddsds"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />

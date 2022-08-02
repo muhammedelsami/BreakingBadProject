@@ -8,6 +8,9 @@
         <variable
             name="characterDetails"
             type="com.example.breakingbadproject.model.CharactersModelItem" />
+        <variable
+            name="viewmodel"
+            type="com.example.breakingbadproject.viewmodel.DetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,11 +78,51 @@
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/yaztext"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="text..."-->
+<!--            android:background="@color/white"-->
+<!--            android:padding="15dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:onTextChanged="@{()->viewmodel.onPasswordTextChanged()}"-->
+
+<!--            app:layout_constraintTop_toBottomOf="@id/cardView"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/detail"-->
+<!--            />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:visibility="gone"
+            android:id="@+id/outlinedTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="30dp"
+            app:boxStrokeWidth="3dp"
+
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Day"
+            android:hint="text"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            app:layout_constraintBottom_toTopOf="@id/detail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onTextChanged="@{()->viewmodel.onPasswordTextChanged()}"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/detail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="70dp"
             app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardView">
@@ -174,5 +217,8 @@
         </androidx.cardview.widget.CardView>
 
 
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

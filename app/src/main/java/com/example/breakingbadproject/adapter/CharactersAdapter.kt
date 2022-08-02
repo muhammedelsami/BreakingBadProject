@@ -1,6 +1,7 @@
 package com.example.breakingbadproject.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.breakingbadproject.database.CharactersDatabase
 import com.example.breakingbadproject.databinding.CharacterItemBinding
@@ -50,6 +53,11 @@ class CharactersAdapter(private var charList : ArrayList<CharactersModelItem>) :
         // dataBinding
         holder.binding.characters = charList[position]
         holder.binding.listener = this
+
+        // direct xml'den tetiklerken
+        //var dd = ViewModelProvider(holder.itemView.context as AppCompatActivity)[CharacterViewModel::class.java]
+        //holder.binding.viewmodel = dd
+
         holder.binding.characterDelete.setOnClickListener {
             val delete = CharacterViewModel(holder.itemView.context.applicationContext as Application)
             delete.deleteCharacter(holder.binding.characterUuid.text.toString().toInt()).apply {

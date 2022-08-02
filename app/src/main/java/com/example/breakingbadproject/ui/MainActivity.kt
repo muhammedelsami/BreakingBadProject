@@ -1,14 +1,18 @@
 package com.example.breakingbadproject.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.breakingbadproject.R
 import com.example.breakingbadproject.adapter.CharactersAdapter
 import com.example.breakingbadproject.databinding.ActivityMainBinding
 import com.example.breakingbadproject.model.CharactersModelItem
@@ -17,7 +21,7 @@ import com.sn.lib.NestedProgress
 
 private lateinit var binding: ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     //latent var apiService: ApiService
     //latent var charList: MutableList<CharactersModelItem>
 
@@ -32,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
 
         //window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
         //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -87,4 +91,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onCreateOptionsMenu(menu : Menu?) : Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val search = menu?.findItem(R.id.menu_search)
+        val searchView = search?.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+        return true
+    }
+
+    override fun onQueryTextSubmit(p0 : String?) : Boolean {
+        if (p0!=null) {
+            searchDatabase(p0)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(p0 : String?) : Boolean {
+        if (p0!=null) {
+            searchDatabase(p0)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query : String) {
+        val searchQuery = "%$query%"
+        characterViewModel.searchDatabase(searchQuery)
+
+    }
+
 }

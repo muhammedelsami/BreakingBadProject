@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.example.breakingbadproject.adapter.CharactersAdapter
 import com.example.breakingbadproject.data.ApiClient
 import com.example.breakingbadproject.data.ApiService
 import com.example.breakingbadproject.database.CharactersDatabase
+import com.example.breakingbadproject.model.CharactersModel
 import com.example.breakingbadproject.model.CharactersModelItem
 import com.example.breakingbadproject.util.MySharedPreferences
 import kotlinx.coroutines.launch
@@ -115,6 +117,22 @@ class CharacterViewModel(application: Application) : BaseViewModel(application) 
                 CharactersDatabase.invoke(getApplication()).characterDao().deleteCharacter(it)
             }
             Toast.makeText(getApplication(), "Silindi", Toast.LENGTH_SHORT).show()
+            //refresh()  // direct xml'den tetiklerken
         }
     }
+
+    //var listlivedate = MutableLiveData<List<CharactersModelItem>> = MutableLiveData()
+    fun searchDatabase(searchQuery: String) {
+        launch {
+            val dao = CharactersDatabase.invoke(getApplication()).characterDao()
+
+            var list = dao.searchDatabase(searchQuery)
+            viewData(list)
+        }
+    }
+
+      // direct xml'den tetiklerken deneme
+//    fun clicked() {
+//        Toast.makeText(getApplication(), "clicked", Toast.LENGTH_SHORT).show()
+//    }
 }
